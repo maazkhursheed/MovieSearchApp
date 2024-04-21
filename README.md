@@ -1,3 +1,6 @@
+Got it! Here's how you can add images to your README file:
+
+```markdown
 # Movie Search App
 
 This is a cross-platform mobile application developed using React Native and TypeScript that allows users to search for movies in an open API movie database.
@@ -68,3 +71,12 @@ This is a cross-platform mobile application developed using React Native and Typ
 
 - This project was developed as part of a coding challenge.
 - Feel free to explore the codebase and make any modifications or improvements.
+
+## Screenshots
+
+Here are some screenshots of the app:
+
+![Home Screen](/screenshots/HomeScreenMovies.png)
+![Movie Detail Screen](/screenshots/Movie DetailsScreen.png)
+![Search Screen No Data](/screenshots/SearchMovieNoData.png)
+![Search Screen](/screenshots/SearchMovieWithData.png)
