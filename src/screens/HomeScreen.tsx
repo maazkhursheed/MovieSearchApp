@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRandomMovies } from '../redux/moviesSlice'; // Import the Redux action
 import { useNavigation } from '@react-navigation/native';
 import MovieCard from '../components/MovieCard';
 import MovieService from '../services/MovieService';
-import { Movie } from '../utils/types';
 
 const HomeScreen = () => {
-  const [randomMovies, setRandomMovies] = useState<Movie[]>([]);
+  const dispatch = useDispatch();
+  const randomMovies = useSelector(state => state.movies.randomMovies);
   const navigation = useNavigation();
 
   useEffect(() => {
     const fetchRandomMovies = async () => {
       try {
         const movies = await MovieService.getRandomMovies();
-        setRandomMovies(movies);
+        dispatch(setRandomMovies(movies)); // Dispatch the action to set random movies
       } catch (error) {
         console.error('Error fetching random movies:', error);
       }
     };
 
     fetchRandomMovies();
-  }, []);
+  }, [dispatch]);
 
   const handleSearchNavigation = () => {
     // Navigate to the SearchScreen when clicked
