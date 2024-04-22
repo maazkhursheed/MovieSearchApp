@@ -39,6 +39,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  modalImage: {
+    width: '80%',
+    height: '80%',
+    resizeMode: 'contain',
+  },
+  zoomText: {
+    fontSize: 12,
+    color: '#fff',
+    textAlign: 'center',
+    marginTop: 10,
+  },
 });
 
 export default styles;

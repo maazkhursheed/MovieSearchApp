@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, ImageBackground, ActivityIndicator } from 'react-native';
+import { View, Text, Image, ScrollView, ImageBackground, ActivityIndicator, Modal, TouchableWithoutFeedback } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Import Redux hooks
 import MovieService from '../../services/MovieService'; // Import the service
 import styles from "./styles";
@@ -18,6 +18,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
   // Redux selector to access selected movie details from Redux store
   const selectedMovieDetails = useSelector(state => state.movies.selectedMovieDetail);
   const [isLoading, setIsLoading] = useState(true); // State to manage loading state
+  const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -48,7 +49,9 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
             </View>
           ) : (
             <>
-              <Image source={{ uri: selectedMovieDetails?.Poster }} style={styles.poster} />
+              <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
+                <Image source={{ uri: selectedMovieDetails?.Poster }} style={styles.poster} />
+              </TouchableWithoutFeedback>
               <View style={styles.detailsContainer}>
                 <Text style={styles.title}>{selectedMovieDetails?.Title}</Text>
                 <CustomText text={`Year: ${selectedMovieDetails?.Year}`} />
@@ -62,6 +65,14 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
                 <CustomText text={`Writer: ${selectedMovieDetails?.Writer}`} />
                 <CustomText text={`Plot: ${selectedMovieDetails?.Plot}`} />
               </View>
+              <Modal visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(false)}>
+                <View style={styles.modalContainer}>
+                  <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+                    <Image source={{ uri: selectedMovieDetails?.Poster }} style={styles.modalImage} />
+                  </TouchableWithoutFeedback>
+                  <Text style={styles.zoomText}>Click on picture again to zoom out</Text>
+                </View>
+              </Modal>
             </>
           )}
         </ScrollView>

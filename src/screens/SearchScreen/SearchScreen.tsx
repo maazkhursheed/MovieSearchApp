@@ -31,6 +31,7 @@ const SearchScreen = () => {
   const clearSearchResults = () => {
     dispatch(setSearchResults([])); // Dispatch action to clear search results
     setSearchError('');
+    setSearchQuery('');
   };
 
   return (
@@ -58,7 +59,7 @@ const SearchScreen = () => {
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
         {isLoading && <ActivityIndicator color="#fff" />}
-        {searchResults.length > 0 ? (
+        {searchQuery !== '' && searchResults.length > 0 && (
           <FlatList
             data={searchResults}
             renderItem={({ item }) => (
@@ -71,9 +72,8 @@ const SearchScreen = () => {
             keyExtractor={(item) => item.id}
             style={styles.flatList}
           />
-        ) : (
-          searchError !== '' && <Text style={styles.noResultsText}>{searchError}</Text>
         )}
+        {searchQuery !== '' && searchResults.length === 0 && <Text style={styles.noResultsText}>{searchError}</Text>}
       </View>
     </ImageBackground>
   );

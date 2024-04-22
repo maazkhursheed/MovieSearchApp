@@ -78,6 +78,7 @@ This is a cross-platform mobile application developed using React Native and Typ
 Here are some screenshots of the app:
 
 ![Home Screen](/screenshots/HomeScreenMovies.png)
-![Movie Detail Screen](/screenshots/MovieDetailsScreen.png)
+![Movie Detail Screen](/screenshots/MovieDetailsScreen.png) 
+![Movie Detail Screen ZoomedImage](/screenshots/ZoomedImage.png)
 ![Search Screen No Data](/screenshots/SearchMovieNoData.png)
 ![Search Screen](/screenshots/SearchMovieWithData.png)
