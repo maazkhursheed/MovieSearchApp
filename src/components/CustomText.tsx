@@ -9,7 +9,7 @@ const CustomText = ({ text }) => {
 
 const styles = StyleSheet.create({
   info: {
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 5,
     textAlign: 'center',
     color: '#fff',

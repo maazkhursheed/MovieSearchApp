@@ -5,11 +5,15 @@ const moviesSlice = createSlice({
   initialState: {
     randomMovies: [],
     searchResults: [],
+    selectedMovieDetail: null,
     selectedMovie: null,
   },
   reducers: {
     setRandomMovies(state, action) {
       state.randomMovies = action.payload;
+    },
+    setSelectedMovieDetail(state, action) {
+      state.selectedMovieDetail = action.payload;
     },
     setSearchResults(state, action) {
       state.searchResults = action.payload;
@@ -20,5 +24,5 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { setRandomMovies, setSearchResults, setSelectedMovie } = moviesSlice.actions;
+export const { setRandomMovies, setSelectedMovieDetail, setSearchResults, setSelectedMovie } = moviesSlice.actions;
 export default moviesSlice.reducer;

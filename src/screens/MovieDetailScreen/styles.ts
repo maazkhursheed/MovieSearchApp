@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
   },
   poster: {
     width: '100%',
-    height: 400,
-    marginBottom: 20,
-    resizeMode: 'fit',
+    height: 300,
+    marginBottom: 15,
+    resizeMode: 'contain',
   },
   detailsContainer: {
     width: '80%',
@@ -34,6 +34,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     textAlign: 'center',
     color: '#fff',
+  },
+  loaderContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

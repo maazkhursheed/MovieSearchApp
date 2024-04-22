@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, ImageBackground } from 'react-native';
-import { Movie } from '../../utils/types';
+import { View, Text, Image, ScrollView, ImageBackground, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'; // Import Redux hooks
+import MovieService from '../../services/MovieService'; // Import the service
 import styles from "./styles";
-import { getRandomReview, getRatingFromReview } from "../../utils/CommonHelper";
 import CustomText from "../../components/CustomText";
+import { Movie } from '../../utils/types';
+import { setSelectedMovieDetail } from "../../redux/moviesSlice"; // Import the Redux action
 
 interface Props {
   route: { params: { movie: Movie } };
@@ -11,15 +13,26 @@ interface Props {
 
 const MovieDetailScreen: React.FC<Props> = ({ route }) => {
   const { movie } = route.params;
-  const [rating, setRating] = useState('0');
-  const [review, setReview] = useState('');
+  const dispatch = useDispatch(); // Redux dispatch function
+
+  // Redux selector to access selected movie details from Redux store
+  const selectedMovieDetails = useSelector(state => state.movies.selectedMovieDetail);
+  const [isLoading, setIsLoading] = useState(true); // State to manage loading state
 
   useEffect(() => {
-    const randomReview = getRandomReview();
-    setReview(randomReview);
-    const calculatedRating = getRatingFromReview(randomReview);
-    setRating(calculatedRating);
-  }, []);
+    const fetchMovieDetails = async () => {
+      try {
+        const details = await MovieService.getSelectedMovieDetails(movie.imdbID);
+        dispatch(setSelectedMovieDetail(details)); // Dispatch the action to set selected movie details in Redux store
+      } catch (error) {
+        console.error('Error fetching movie details:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMovieDetails();
+  }, [dispatch, movie.imdbID]);
 
   return (
     <View style={styles.container}>
@@ -29,15 +42,28 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
         resizeMode="cover"
       >
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <Image source={{ uri: movie?.Poster }} style={styles.poster} />
-          <View style={styles.detailsContainer}>
-            <Text style={styles.title}>{movie?.Title}</Text>
-            <CustomText text={`Year: ${movie?.Year}`} />
-            <CustomText text={`Type: ${movie?.Type}`} />
-            <CustomText text={`IMDb ID: ${movie?.imdbID}`} />
-            <CustomText text={`Rating: ${rating}`} />
-            <CustomText text={`Review: ${review}`} />
-          </View>
+          {isLoading ? (
+            <View style={[styles.container, styles.loaderContainer]}>
+              <ActivityIndicator size="large" color="#ffffff" />
+            </View>
+          ) : (
+            <>
+              <Image source={{ uri: selectedMovieDetails?.Poster }} style={styles.poster} />
+              <View style={styles.detailsContainer}>
+                <Text style={styles.title}>{selectedMovieDetails?.Title}</Text>
+                <CustomText text={`Year: ${selectedMovieDetails?.Year}`} />
+                <CustomText text={`Type: ${selectedMovieDetails?.Type}`} />
+                <CustomText text={`IMDB Rating: ${selectedMovieDetails?.imdbRating}`} />
+                <CustomText text={`Actors: ${selectedMovieDetails?.Actors}`} />
+                <CustomText text={`Awards: ${selectedMovieDetails?.Awards}`} />
+                <CustomText text={`Genre: ${selectedMovieDetails?.Genre}`} />
+                <CustomText text={`Language: ${selectedMovieDetails?.Language}`} />
+                <CustomText text={`Released: ${selectedMovieDetails?.Released}`} />
+                <CustomText text={`Writer: ${selectedMovieDetails?.Writer}`} />
+                <CustomText text={`Plot: ${selectedMovieDetails?.Plot}`} />
+              </View>
+            </>
+          )}
         </ScrollView>
       </ImageBackground>
     </View>

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, FlatList, StyleSheet, Text, ImageBackground, ActivityIndicator } from "react-native";
+import { View, TextInput, TouchableOpacity, FlatList, Text, ImageBackground, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'; // Import Redux hooks
+import { setSearchResults } from '../../redux/moviesSlice'; // Import the Redux action
 import MovieCard from '../../components/MovieCard';
 import MovieService from '../../services/MovieService';
-import { Movie } from '../../utils/types';
 import styles from "./styles";
 
 const SearchScreen = () => {
+  const dispatch = useDispatch(); // Redux dispatch function
+  const searchResults = useSelector(state => state.movies.searchResults); // Access search results from Redux store
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchError, setSearchError] = useState('');
 
@@ -15,7 +18,7 @@ const SearchScreen = () => {
     try {
       setIsLoading(true);
       const movies = await MovieService.searchMovies(searchQuery);
-      setSearchResults(movies);
+      dispatch(setSearchResults(movies)); // Dispatch the action to set search results in Redux store
       setSearchError('');
     } catch (error) {
       console.error('Error searching movies:', error);
@@ -26,7 +29,7 @@ const SearchScreen = () => {
   };
 
   const clearSearchResults = () => {
-    setSearchResults([]);
+    dispatch(setSearchResults([])); // Dispatch action to clear search results
     setSearchError('');
   };
 
