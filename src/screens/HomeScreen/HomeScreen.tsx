@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setRandomMovies } from '../redux/moviesSlice'; // Import the Redux action
+import { setRandomMovies } from '../../redux/moviesSlice'; // Import the Redux action
 import { useNavigation } from '@react-navigation/native';
-import MovieCard from '../components/MovieCard';
-import MovieService from '../services/MovieService';
+import MovieCard from '../../components/MovieCard';
+import MovieService from '../../services/MovieService';
+import styles from "./styles";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/movie-background.jpg')}
+        source={require('../../assets/movie-background.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -48,42 +49,5 @@ const HomeScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 20,
-    textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-  },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  searchLink: {
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  searchText: {
-    fontSize: 14,
-    color: 'white',
-    textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-  },
-  clickableText: {
-    color: '#5ca3fc',
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
-  },
-});
 
 export default HomeScreen;
