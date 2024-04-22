@@ -62,10 +62,11 @@ This is a cross-platform mobile application developed using React Native and Typ
 - Search functionality to search for movies based on title or keywords
 - Movie detail screen to view detailed information about a selected movie
 
-## Bonus Features
+## Bonus Features (TODO):
 
-- SDK Usage in React.js Project
-- State management using Redux
+<!-- TODO: Complete the following tasks -->
+- Demonstrate the usage of the developed SDK by integrating it in a React.js application to fetch and display movie data.
+- Implement optimizations in the state manager solution to improve performance and efficiency.
 
 ## Additional Information
 
